@@ -1,0 +1,43 @@
+CTC_VARS:
+  CTC_CONDA_ENV: conda.yml
+description: Pipeline to create vigiclimm indicators
+families:
+  VIGICLIMM_INDICATORS:
+    CTC_VARS:
+      CTC_CALLBACK_ENV:
+        WORKING_DIR: /cipslab_shared/tmp/prefect/${CIPSTC_SLURM_TASK_PARTITION}/vigiclimm_indicators/${PREFECT__CONTEXT__FLOW_ID}_${CIPSTC_SCHED_UTC_ISODATETIME}
+        CIPSDS_GFS_DIR: /archive_cips/archive/nwp/GFS__0.25/all/raw
+        CIPSDS_ERA5_DIR: /archive_cips/archive/climate/ERA5Land/all/raw
+        CIPSDS_TAMSAT_DIR: /archive_cips/archive/climate/TAMSAT/all/raw
+        CIPSDS_STATIC: /archive_cips/archive/static/mfi/vigiclimm-indicators
+        RUN_HOUR: "00"
+    tasks:
+      fetch:
+        CTC_VARS:
+          CTC_CALLBACK: fetch.sh
+          CTC_CALLBACK_ENV:
+            PLIP: PLOP
+        triggers: 30 11,23 * * *
+      compute:
+        CTC_VARS:
+          CTC_CALLBACK: compute.sh
+          CTC_CALLBACK_ENV:
+            PLIP: PLOP
+        triggers:
+        - VIGICLIMM_INDICATORS/fetch eq COMPLETE
+      send_data:
+        CTC_VARS:
+          CTC_CALLBACK: send_data.sh
+          CTC_CALLBACK_ENV:
+            FTP_DESTINATION: 10.10.20.20
+            FTP_USER: cipstcz
+            FTP_PASSWD: Cipstcz1234
+            FTP_REPOSITORY: .
+            TTAAII: CIPS01
+            CCCC: SDXM
+            RESULTS_DIR: ${WORKING_DIR}/output
+
+        triggers:
+        - VIGICLIMM_INDICATORS/compute eq COMPLETE
+name: MFI_VIGICLIMM_INDICATORS
+version: master

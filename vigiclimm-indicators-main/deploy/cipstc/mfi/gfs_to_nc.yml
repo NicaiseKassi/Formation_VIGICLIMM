@@ -1,0 +1,67 @@
+# Section dedicated to parameter extraction during the GRIB to NetCDF conversion
+grib_extractor:
+  filters:
+    - name: tp
+      filter:
+        parameterNumber: 8
+        parameterCategory: 1
+        typeOfLevel: surface
+    - name: 2t
+      filter:
+        parameterNumber: 0
+        parameterCategory: 0
+        typeOfLevel: heightAboveGround
+        level: 2
+    - name: dswrf
+      filter:
+        parameterNumber: 192
+        parameterCategory: 4
+        typeOfLevel: surface
+    - name: gust
+      filter:
+        parameterNumber: 22
+        parameterCategory: 2
+        typeOfLevel: surface
+    - name: 2r
+      filter:
+        parameterNumber: 1
+        parameterCategory: 1
+        typeOfLevel: heightAboveGround
+        level: 2
+    - name: 2d
+      filter:
+        parameterNumber: 6
+        parameterCategory: 0
+        typeOfLevel: heightAboveGround
+        level: 2
+    - name: 10u
+      filter:
+        parameterNumber: 2
+        parameterCategory: 2
+        typeOfLevel: heightAboveGround
+        level: 10
+    - name: 10v
+      filter:
+        parameterNumber: 3
+        parameterCategory: 2
+        typeOfLevel: heightAboveGround
+        level: 10
+    - name: mcc
+      filter:
+          parameterNumber: 4
+          parameterCategory: 6
+          typeOfLevel: middleCloudLayer
+          stepType: instant
+          level: 0
+    - name: lcc
+      filter:
+          parameterNumber: 3
+          parameterCategory: 6
+          typeOfLevel: lowCloudLayer
+          stepType: instant
+          level: 0
+          
+  merge_kwargs:
+    concat_dim: "valid_time"
+    drop_vars: ['isobaricInhPa', 'heightAboveGround', 'time', 'surface', 'step']
+    bfill: true

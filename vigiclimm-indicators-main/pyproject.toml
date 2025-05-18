@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=42"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vigiclimm-indicators"
+version = "0.0.2"
+dependencies = [
+    "click",
+    "loguru",
+    "pandas",
+    "xarray",
+    "numpy",
+    "pytest",
+    "pytest-datadir",
+    "netCDF4",
+    "h5netcdf",
+    "PyYAML"
+]
+requires-python = ">=3.9"
+authors = [
+  {name = "Martin Espitalié", email = "espitalie.m@gmail.com"},
+  {email = "martin.espitalie-ext@mfi.fr"},
+  {name = "MFI", email = "irtf@mfi.fr"},
+]
+
+description = "Meteorological and agricultural indicators to advise rice production practices in Ivory Coast"
+
+[project.urls]
+Repository = "https://gitlab.mfi.tls/science-dev/nwp-processing/vigiclimm-indicators"
+Changelog = "https://gitlab.mfi.tls/science-dev/nwp-processing/vigiclimm-indicators/-/blob/main/CHANGELOG.md"
+
+[project.scripts]
+vi-run-forecast = "vigiclimm_indicators.weather_indicators.daily_forecast:run_all_stations"
+vi-run-historical = "vigiclimm_indicators.weather_indicators.historical:run_all_stations"
+vi-run-agro = "vigiclimm_indicators.agro_indicators.generate_agro_indicators:run_all_stations"
+
+[tool.setuptools.packages.find]
+include = ["vigiclimm_indicators", "vigiclimm_indicators.*"]
+

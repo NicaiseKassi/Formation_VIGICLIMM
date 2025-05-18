@@ -1,0 +1,60 @@
+image: python:3
+
+stages:
+  - test
+  - format
+  - deploy
+
+test cips tc:
+  stage: test
+  script:
+    # Install deps
+    - apt-get update
+    - apt-get install -y libeccodes0
+    - apt-get install lftp
+    - pip config set global.extra-index-url https://factory.mfi.tls:443/artifactory/api/pypi/global-pypi-dev-local/simple
+    - pip config set global.trusted-host factory.mfi.tls
+    - pip install nwp-tools
+    - pip install .
+    # Install cipstc_publish tools
+    - pip install requests
+    - wget -q https://gist.githubusercontent.com/steph-ben/59981e73a78440543283470ac865803b/raw/publish.py -O cipstc_publish.py
+    # Run
+    - eval "$(python cipstc_publish.py --project-yml deploy/cipstc/mfi/project.yml run-local | grep export)"
+    - bash deploy/cipstc/mfi/mfi_ci_fixture.sh
+    - python cipstc_publish.py --project-yml deploy/cipstc/mfi/project.yml run-local | bash -e
+
+
+include:
+  # Test
+  - project: 'devops/ci-cd'
+    ref: master
+    file: templates/pytest.yml
+
+  # Check format
+  - project: 'devops/ci-cd'
+    ref: master
+    file: templates/pep8.yml
+    inputs:
+      max-line-length: 200
+  - project: 'devops/ci-cd'
+    ref: master
+    file: templates/mypy.yml
+
+  # Publish to local+dmz
+  - project: 'devops/ci-cd'
+    ref: master
+    file: templates/deploy_python_package_mfi.yml
+
+pages:
+  stage: deploy
+  script:
+    - pip install sphinx sphinxcontrib-mermaid sphinx-rtd-theme sphinx-click
+    - pip install .
+    - sphinx-build -a docs/source docs/build
+    - mv docs/build public
+  artifacts:
+    paths:
+      - public
+
+

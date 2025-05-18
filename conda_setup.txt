@@ -1,0 +1,14 @@
+Configurer l'environnement conda
+
+1) conda init bash && source ~/.bashrc
+2) conda env create -f conda.env.yml
+3) conda activate my_env_name
+4) conda install -c anaconda ipykernel
+5) python -m ipykernel install --user --name=test_formation
+
+Créer un lien symbolique depuis votre home vers les archives CIPS-DS
+
+1) df –h
+2) ln -s /archive_cips/archive ~/cips
+3)Actualiser l'interface CIPS-LAB 
+

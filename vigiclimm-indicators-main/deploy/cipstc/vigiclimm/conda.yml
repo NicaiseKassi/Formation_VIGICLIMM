@@ -1,0 +1,10 @@
+name: vigiclimm-indicators
+dependencies:
+  - python=3.12
+  - eccodes=2.35.0
+  - lftp=4.9.2
+  - cdo
+  - pip
+  - pip:
+      - vigiclimm_indicators
+      - nwp-tools

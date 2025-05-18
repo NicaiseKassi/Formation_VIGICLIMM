@@ -1,0 +1,1 @@
+The data folder stores fake dataset (csv, nc format...) used for testing purposes.
