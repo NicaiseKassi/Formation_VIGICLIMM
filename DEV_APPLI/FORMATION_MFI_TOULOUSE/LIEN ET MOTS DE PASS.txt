@@ -1,0 +1,33 @@
+LIEN ET MOTS DE PASS
+
+- SLACK
+https://app.slack.com/client/T0ZVBFXQE/C090EAL4KA4
+
+mfi-meteo.slack.com
+
+gmail : franck.kassi-ext@mfi.fr
+
+mot de pass: Prosperite1234
+
+-CIPS DATA STORE
+http://csfcin01.sodexam.cin/filecategories/all
+
+USERNAME:kassin
+PASSWORD: Prosperite
+
+-CIPS TC
+https://webportal.cipstc.sodexam.cin/cipstc/#/schedules
+
+USERNAME: kassi
+PASSWORD:Prosperite
+
+
+
+
+-GITLAB SODEXAM
+https://gitlab.sodexam.cin/users/sign_in#login-pane
+
+USERNAME : kassif_ext
+
+PASSWORD : zTp$MfuumkPx5fz!
+
